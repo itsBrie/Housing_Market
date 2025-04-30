@@ -66,3 +66,11 @@ def get_census_data (start_year, end_year):
            output_files.append(output_file)
         time.sleep(1)
     return output_files
+
+#Uploading/Removing files to Snowflake stage
+def upload_files_to_stage(in_connection,filelist,stage_name):
+    print(f"Removing all files from Snowflake stage {stage_name}...")
+    cursor=in_connection.cursor()
+    cursor.execute(f"REMOVE @{stage_name}")
+    cursor.close()
+    print(f"Removal of all files from Snowflake stage {stage_name} complete.")
