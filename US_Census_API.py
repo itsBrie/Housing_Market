@@ -46,3 +46,23 @@ def create_snowflake_connection():
     return conn
 
 #Get Census data from API
+def get_census_data (start_year, end_year):
+    output_files=[]
+    for year in range(start_year,end_year+1):
+        url=BASE_URL.format(year=year)+PARAMS.format(key=API_KEY)
+        response=requests.get(url)
+        if response.status_code!= 200:
+            print(f"Error fetching data for {year} : {response.status_code}")
+            continue
+
+        data=response.json()
+        headers=data[0]
+        converted_data=[dict(zip(headers,row))|{"year":year}for row in data[1:]]
+
+        with open(f"{output_dir}/TX_data_{year}.json","w",encoding="utf-8")as f:
+           f.write(str(converted_data))
+           output_file=f"{output_dir}/TX_data_{year}.json"
+           print(f"Data for {year} written to {output_file}")
+           output_files.append(output_file)
+        time.sleep(1)
+    return output_files
