@@ -74,3 +74,11 @@ def upload_files_to_stage(in_connection,filelist,stage_name):
     cursor.execute(f"REMOVE @{stage_name}")
     cursor.close()
     print(f"Removal of all files from Snowflake stage {stage_name} complete.")
+
+
+    for file in filelist:
+        print(f"Uploading {file} to Snowflake stage {stage_name}...")
+        cursor=in_connection.cursor()
+        cursor.execute(f"PUT file://{file} @{stage_name}")
+        cursor.close()
+        print(f"Upload of {file} to Snowflake stage {stage_name} complete.")
