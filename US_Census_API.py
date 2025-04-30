@@ -82,3 +82,16 @@ def upload_files_to_stage(in_connection,filelist,stage_name):
         cursor.execute(f"PUT file://{file} @{stage_name}")
         cursor.close()
         print(f"Upload of {file} to Snowflake stage {stage_name} complete.")
+
+if __name__=='__main__':
+    start_year=2019
+    end_year=2023
+    files_to_upload=get_census_data(start_year,end_year)
+    print("Data retrieval complete")
+    print("Establishing Snowflake connection...")
+    snowflake_conn=create_snowflake_connection()
+    print("Snowflake connection established")
+    print("Uploading files to Snowflake stage...")
+
+    upload_files_to_stage(snowflake_conn,files_to_upload,stage)
+    print("File upload complete.")
