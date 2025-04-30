@@ -44,3 +44,5 @@ def create_snowflake_connection():
         print("Connection Successful")
     stage=config['snowflake_stage']
     return conn
+
+#Get Census data from API
