@@ -23,3 +23,24 @@ PARAMS=("get=NAME,B01001_001E,B01001_002E,B01001_026E,B02001_002E,B02001_003E,"
 "&for=place:*&in=state:48" 
 "&key={key}")
 
+#Creating a snowflake connection
+def create_snowflake_connection():
+    print(f"Connecting to Snowflake as user {config['snowflake_user']} on account {config['snowflake_account']}...")
+    global stage 
+    conn=snowflake.connector.connect(
+        user=config['snowflake_user'],
+        password=config['snowflake_password'],
+        account=config['snowflake_account'],
+        warehouse=config['snowflake_warehouse'],
+        schema=config['snowflake_schema'],
+        role=config['snowflake_role'],
+        database=config['snowflake_database'],
+        authenticator='snowflake'
+    )
+    if conn is None:
+        print("Connection failed")
+        exit()
+    else:
+        print("Connection Successful")
+    stage=config['snowflake_stage']
+    return conn
