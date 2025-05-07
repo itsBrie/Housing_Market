@@ -25,6 +25,7 @@ df_long=df.melt(
 )
 #Converting the Data column from string to datetime
 df_long['Date'] = pd.to_datetime(df_long['Date'], format='%m/%d/%Y', errors='coerce')
+df_long['Date'] = df_long['Date'].dt.strftime('%Y-%m-%d')
 
 #Drop any rows where 'Date' failed to convert
 df_long = df_long.dropna(subset=['Date'])
@@ -35,10 +36,10 @@ df_long = df_long.dropna(subset=['Date'])
 output_dir=os.path.dirname(zillow_csv)
 os.makedirs(output_dir, exist_ok=True)
 zillow_output_json=os.path.join(output_dir,'zillow_data.json')
-df_long.to_json(zillow_output_json, index=False)
+df_long.to_json(zillow_output_json, orient='records',lines=True)
 
 
-#Connecting and uploading csv files to Snowflake
+#Connecting and uploading JSON files to Snowflake
 print("Establishing Snowflake connection...")
 snowflake_conn=SnowflakeConnector(config)
 snowflake_conn.create_snowflake_connection()
