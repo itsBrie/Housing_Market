@@ -22,3 +22,11 @@ df_long=df.melt(
     var_name='Date',
     value_name='HomeValue'
 )
+#Converting the Data column from string to datetime
+df_long['Date'] = pd.to_datetime(df_long['Date'], format='%m/%d/%Y', errors='coerce')
+
+#Drop any rows where 'Date' failed to convert
+df_long = df_long.dropna(subset=['Date'])
+
+print(df_long.head())
+
