@@ -1,6 +1,7 @@
 import pandas as pd 
 import json
 import os
+from snowflake_connector import SnowflakeConnector
 
 #Getting CSV Path and Assigning it to var 
 config_path=os.path.join(os.path.dirname(__file__),'config','config_file.json')
@@ -28,5 +29,21 @@ df_long['Date'] = pd.to_datetime(df_long['Date'], format='%m/%d/%Y', errors='coe
 #Drop any rows where 'Date' failed to convert
 df_long = df_long.dropna(subset=['Date'])
 
-print(df_long.head())
+#print(df_long.head())
 
+#Outputing Dataframe as CSV in same input folder
+output_dir=os.path.dirname(zillow_csv)
+os.makedirs(output_dir, exist_ok=True)
+zillow_output_csv=os.path.join(output_dir,'zillow_long.csv')
+df_long.to_csv(zillow_output_csv, index=False)
+
+
+#Connecting and uploading csv files to Snowflake
+print("Establishing Snowflake connection...")
+snowflake_conn=SnowflakeConnector(config)
+snowflake_conn.create_snowflake_connection()
+print("Snowflake connection established")
+
+print("Uploading files to Snowflake stage...")
+snowflake_conn.upload_files_to_stage([zillow_output_csv])
+print("File upload complete.")
