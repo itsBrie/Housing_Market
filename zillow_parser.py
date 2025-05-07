@@ -9,3 +9,16 @@ with open (config_path,'r')as config_file:
 
 zillow_csv=config['zillow_csv_path']
 
+#Reading the CSV file
+df=pd.read_csv(zillow_csv)
+
+#Defining the headers and date col
+col_attr=['RegionID', 'SizeRank', 'RegionName', 'RegionType', 'StateName',
+    'State', 'City', 'Metro', 'CountyName']
+
+#Melting the DataFrame into a Long Format
+df_long=df.melt(
+    id_vars=col_attr,
+    var_name='Date',
+    value_name='HomeValue'
+)
