@@ -34,8 +34,8 @@ df_long = df_long.dropna(subset=['Date'])
 #Outputing Dataframe as CSV in same input folder
 output_dir=os.path.dirname(zillow_csv)
 os.makedirs(output_dir, exist_ok=True)
-zillow_output_csv=os.path.join(output_dir,'zillow_long.csv')
-df_long.to_csv(zillow_output_csv, index=False)
+zillow_output_json=os.path.join(output_dir,'zillow_long.json')
+df_long.to_json(zillow_output_json, index=False)
 
 
 #Connecting and uploading csv files to Snowflake
@@ -45,5 +45,5 @@ snowflake_conn.create_snowflake_connection()
 print("Snowflake connection established")
 
 print("Uploading files to Snowflake stage...")
-snowflake_conn.upload_files_to_stage([zillow_output_csv])
+snowflake_conn.upload_files_to_stage([zillow_output_json])
 print("File upload complete.")
