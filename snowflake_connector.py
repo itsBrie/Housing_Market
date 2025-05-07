@@ -13,7 +13,7 @@ class SnowflakeConnector:
 
 
     def create_snowflake_connection(self):
-        print(f"Connecting to Snowflake as user {self.config['snowflake_user']} on account {self.config['snowflake_account']}...")
+        print(f"Connecting to Snowflake as user {self.config['snowflake_user']}git account {self.config['snowflake_account']}...")
         self.conn=snowflake.connector.connect(
             user=self.config['snowflake_user'],
             password=self.config['snowflake_password'],
