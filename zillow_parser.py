@@ -34,7 +34,7 @@ df_long = df_long.dropna(subset=['Date'])
 #Outputing Dataframe as CSV in same input folder
 output_dir=os.path.dirname(zillow_csv)
 os.makedirs(output_dir, exist_ok=True)
-zillow_output_json=os.path.join(output_dir,'zillow_long.json')
+zillow_output_json=os.path.join(output_dir,'zillow_data.json')
 df_long.to_json(zillow_output_json, index=False)
 
 
