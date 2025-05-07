@@ -2,7 +2,7 @@ import requests
 import time 
 import os
 import json
-import snowflake.connector
+from snowflake_connector import SnowflakeConnector
 
 stage=None
 
