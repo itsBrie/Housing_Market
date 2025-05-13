@@ -10,12 +10,9 @@ CREATE OR ALTER STAGE CENSUS_STAGE;
 
 CREATE OR REPLACE FILE FORMAT CENSUS_STAGE_JSON TYPE = 'JSON';
 
----> Changing CENSUS_STAGE format to match the CENSUS_STAGE_JSON JSON format,View the RAW data in the staged JSON files
 SELECT $1 FROM 
 @CENSUS_STAGE (file_format=>'CENSUS_STAGE_JSON',pattern=> '.*.*');
 
----> Flatten the JSON structure in to a tabular format and access it as a view
----> UPDATE ** MAKE SURE TO ADD YEAR in View
 
 CREATE OR REPLACE VIEW CENSUS_STAGE_VIEW AS 
 SELECT 
@@ -37,3 +34,9 @@ SELECT
 FROM 
 @CENSUS_STAGE (file_format => 'CENSUS_STAGE_JSON', pattern => '.*.*') AS S,
     LATERAL FLATTEN (input => S.$1) t;
+ CREATE OR REPLACE VIEW CITY_VIEW_TX AS (
+    SELECT * FROM CENSUS_STAGE_VIEW WHERE name LIKE '%city%'
+    )
+
+    SELECT DISTINCT * FROM CITY_VIEW_TX;
+LIST @CENSUS_STAGE/zillow_data.json.gz;
