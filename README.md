@@ -7,4 +7,4 @@ The analysis reveals a widening gap between income growth and housing prices—h
 
 This project not only strengthened my ETL and data modeling skills but also shed light on the real-world impact of economic pressures on homeownership. Future phases will explore demographic wealth gaps and predictive modeling.
 
-View blog post here: https://curlyheadedcoder.wordpress.com/2025/05/13/texas-housing-market/
+View blog post here: https://curlyheadedcoder.wpcomstaging.com/
